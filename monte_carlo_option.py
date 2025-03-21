@@ -44,6 +44,18 @@ class monte_carlo:
 
 
 
+    def antithetic_asset_pairs(S0, r, T, sigma, dlta, N):
+            S = np.zeros([N,2])
+            z = np.random.normal(loc=0,scale=1,size=N)
+            S[0,:] = S0
+            dt = T/N
+            nudt = (r-dlta-0.5*sigma**2)*dt
+            sigmadt = sigma*np.sqrt(dt)
+            for i in range(1,N):
+                S[i,0] = S[i-1,0] * np.exp(nudt + sigmadt * z[i])
+                S[i,1] = S[i-1,1] * np.exp(nudt + sigmadt * (-z[i]))
+            return S
+        
 
 
 

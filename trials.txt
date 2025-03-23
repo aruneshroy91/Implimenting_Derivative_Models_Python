@@ -1,0 +1,24 @@
+## Trial and error parts
+* Parameters
+numiter =100
+r = 0.04
+dlta = 0.02
+sigma = 0.1
+S0 = 100
+T = 1
+N = 252
+K = 105
+
+* Code
+S_mc = np.zeros((N,numiter))
+call_mc = np.zeros((N,numiter))
+C0expected = np.zeros(numiter)
+for i in range(numiter):
+    S_mc[:,i] = mco.monte_carlo.asset_price(S0, r, T, sigma, dlta, N)
+    call_mc[:,i] = [mco.monte_carlo.call(S_mc[j,i],K) for j in range(N)]
+C0expected = np.exp(-r*T)*(1/numiter)*np.sum(call_mc, axis=1)
+
+
+#np.exp(-r*T)*(1/numiter)*
+#print(mco.monte_carlo.call(S_mc[:,1],K))
+#print(S_mc[:,1])
